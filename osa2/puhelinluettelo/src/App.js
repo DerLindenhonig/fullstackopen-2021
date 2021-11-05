@@ -4,6 +4,7 @@ import Persons from './components/persons'
 import Form from './components/form'
 import Filter from './components/filter'
 import Notification from './components/notification'
+import './index.css'
 
 const App = () => {
     const [persons, setPersons] = useState([])
@@ -37,12 +38,12 @@ const App = () => {
                 setNewNumber('')
                 setMessage({
                     content: `${newPerson.name} was added`,
-                    type: 'success'
+                    type: 'successMessage'
                 })
                 setTimeout(() => setMessage(null), 5000)
             })
             .catch(error => {
-                setMessage({ content: error.response.data.error, type: 'error' })
+                setMessage({ content: error.response.data.error, type: 'errorMessage' })
                 setTimeout(() => setMessage(null), 5000)
             })
     }
@@ -56,14 +57,14 @@ const App = () => {
                 setNewNumber('')
                 setMessage({
                     content: `Number of ${person.name} was replaced`,
-                    type: 'success'
+                    type: 'successMessage'
                 })
                 setTimeout(() => setMessage(null), 5000)
             })
             .catch(() => {
                 setMessage({
                     content: `Number of ${person.name} was not replaced`,
-                    type: 'error'
+                    type: 'errorMessage'
                 })
                 setTimeout(() => setMessage(null), 5000)
             })
@@ -75,15 +76,15 @@ const App = () => {
             PersonService.remove(person)
                 .then(() => {
                     setMessage({
-                        content: `The person '${person.name}' was deleted`,
-                        type: 'success'
+                        content: `The person ${person.name} was deleted`,
+                        type: 'successMessage'
                     })
                     setTimeout(() => setMessage(null), 5000);
                 })
                 .catch(() => {
                     setMessage({
-                        content: `The person '${person.name}' was already deleted from server`,
-                        type: 'error'
+                        content: `The person ${person.name} was already deleted from server`,
+                        type: 'errorMessage'
                     })
                     setTimeout(() => setMessage(null), 5000)
                 })
@@ -107,17 +108,15 @@ const App = () => {
 
     return (
         <div>
-            <h2>Phonebook</h2>
-            <Notification message={message} />
+            <h1>Phonebook</h1>
+            <Notification message={message}/>
             <Filter filter={filter} onFilterChange={handleFilterChange}/>
             <h2>Add a new</h2>
-            <Form
-                onSubmit={handleAddPerson}
+            <Form onSubmit={handleAddPerson}
                 newName={newName}
                 onNameChange={handleNameChange}
                 number={newNumber}
-                onNumberChange={handleNumberChange}
-            />
+                onNumberChange={handleNumberChange}/>
             <h2>Numbers</h2>
             <Persons persons={persons} filter={filter} onDelete={handleDelete} />
         </div>
