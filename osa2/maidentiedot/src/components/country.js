@@ -5,18 +5,26 @@ const Country = ({filteredCountries}) => {
 
         const [capitalTemp, setTemp] = useState(0);
         const [capitalWind, setCapitalWind] = useState(0);
-        const api_key = process.env.REACT_APP_API_KEY
+        const api_key = '18bd8bf0cb99b0a94c8a0b9ac93a46c3'
 
         useEffect( () => {
-                axios.get("https://api.openweathermap.org/data/2.5/weather?q=" + filteredCountries[0].capital + "&units=metric&appid=" + api_key)
+                const params = {
+                        access_key: process.env.REACT_APP_API_KEY,
+                        query: filteredCountries[0].capital
+                }
+
+                axios.get('https://api.weatherstack.com/current', {params})
                     .then((response) => {
-                            setTemp(response.data.main.temp);
-                            setCapitalWind(response.data.wind.speed);
+                            setTemp(response.data.current.temperature);
+                            //setCapitalWind(response.data.wind.speed);
                     })
                     .catch((error) => {
                             console.log(error.message);
                     })
         })
+
+
+
 
         return (
             <div>
