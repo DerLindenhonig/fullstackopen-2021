@@ -40,6 +40,12 @@ app.get('/api/persons/:id', (request, response) => {
     }
 })
 
+// info sivu
+app.get('/info', (request, response) => {
+    response.send(`<p>Puhelinluettelossa ${persons.length} henkilön tiedot </p>
+    <p>${new Date()}</p>`)
+})
+
 // poistaan note:
 app.delete('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id)
@@ -59,22 +65,32 @@ const generateId = () => {
 app.post('/api/persons', (request, response) => {
     const body = request.body
 
-    if (!body.content) {
+    if (body.name === undefined) {
         return response.status(400).json({
-            error: 'content missing'
-        })
+            error: "name missing"
+        });
+    }
+
+    if (body.number === undefined) {
+        return response.status(400).json({
+            error: "number missing"
+        });
     }
 
     const person = {
-        content: body.content,
-        important: body.important || false,
-        date: new Date(),
-        id: generateId(),
+        name: body.name,
+        number: body.number,
+        id: Math.floor(Math.random() * 100000),
     }
 
-    persons = persons.concat(person)
-
-    response.json(person)
+    person
+        .save()
+        .then(savedPerson => savedPerson.toJSON())
+        .catch(error => {
+            return response.status(400).json({
+                error: "name must be unique"
+            });
+        });
 })
 
 const PORT = 3001
