@@ -77,5 +77,3 @@ describe('Adding new user', () => {
 afterAll(() => {
     mongoose.connection.close()
 })
-
-// TODO virheellisiä käyttäjiä ei luoda, ja että virheellisen käyttäjän luomisoperaatioon vastaus on järkevä statuskoodin ja virheilmoituksen osalta.
