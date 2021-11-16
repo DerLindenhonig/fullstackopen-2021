@@ -169,7 +169,6 @@ describe('HTTP POST request testing', () => {
     })
 })
 
-// fails after adding decodedToken
 describe('HTTP DELETE request testing', () => {
     test('blog deliting', async () => {
         const users = await User.find({})
