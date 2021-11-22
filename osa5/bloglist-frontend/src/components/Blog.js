@@ -21,7 +21,7 @@ const Blog = ({ blog, setUpdateBlogs, user }) => {
 
   const changeVisible = () => {
     setVisible(!visible)
-    if (blog.user !== user) {
+    if (blog.user.name !== user.name) {
       setDeleteVisible(true)
     }
   }
