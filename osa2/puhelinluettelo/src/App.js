@@ -48,8 +48,7 @@ const App = () => {
         })
 
     } else {
-      const response = window.confirm(`${person.name} is already added to phonebook, replace the old number with a new one?`)
-      if (response) {
+      if (window.confirm(`${person.name} is already added to phonebook, replace the old number with a new one?`)) {
         return editPerson({
           name: newName,
           number: newNumber,
@@ -59,8 +58,7 @@ const App = () => {
   }
 
   const editPerson = (person) => {
-    const newObject = PersonService.update(person)
-    newObject
+    PersonService.update(person)
       .then(editedPerson => {
         setPeople(people
           .map(person => (person.id !== editedPerson.id ? person : editedPerson)))
