@@ -32,6 +32,7 @@ const App = () => {
     }
 
     if (!person) {
+      setAddMessage(newPerson)
       PersonService
         .create(newPerson)
         .then(response => {
@@ -39,14 +40,7 @@ const App = () => {
             .concat(response))
           setNewName('')
           setNewNumber('')
-          setNotification({
-            content: `${newPerson.name} was added`,
-            type: 'successMessage'
-          })
-          setTimeout(() =>
-            setNotification(null), 5000)
         })
-
     } else {
       if (window.confirm(`${person.name} is already added to phonebook, replace the old number with a new one?`)) {
         return editPerson({
@@ -55,6 +49,15 @@ const App = () => {
           id: person.id })
       }
     }
+  }
+
+  const setAddMessage = (newPerson) => {
+    setNotification({
+      content: `${newPerson.name} was added`,
+      type: 'successMessage'
+    })
+    setTimeout(() =>
+      setNotification(null), 5000)
   }
 
   const editPerson = (person) => {
