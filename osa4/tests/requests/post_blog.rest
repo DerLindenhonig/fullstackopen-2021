@@ -1,7 +1,0 @@
-POST http://localhost:3001/api/blogs
-Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InV1c2kga8OkeXR0w6Rqw6QiLCJpZCI6IjYxOTJhOGUzMTBjMmY0N2I3ODY5MGY1YiIsImlhdCI6MTYzNzAwMTUxOX0.MLbkhwzDZxSZBQK7E_BqwWSSR7ilkKFOLssKPM3kM34
-
-{
-	"title": "blogin nimi", "author": "kirjoittaja", "url": "https://uusiurl", "likes": 0
-}
