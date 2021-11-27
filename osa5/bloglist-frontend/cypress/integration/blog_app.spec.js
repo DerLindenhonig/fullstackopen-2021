@@ -62,7 +62,7 @@ describe('Blog app', function () {
         cy.contains('save').click()
       })
 
-      it('can like', function () {
+      it('can like and delete blog', function () {
         cy.contains('another blog created by cypress')
           .get('#view')
           .click()
@@ -70,12 +70,9 @@ describe('Blog app', function () {
           .click()
 
         cy.contains('likes: 1')
-      })
 
-      it('can delete blog', function () {
         cy.contains('another blog created by cypress')
-          .get('#view')
-          .click()
+          .wait(1000)
           .get('#delete')
           .click()
 
@@ -122,4 +119,3 @@ describe('Blog app', function () {
     })
   })
 })
-
