@@ -8,27 +8,12 @@ import {
 } from "react-router-dom"
 import  { useField } from './hooks/index'
 
-const Menu = () => {
-  const padding = {
-    paddingRight: 5
-  }
-  return (
-    <div>
-      <Link style={padding} to="/">anecdotes</Link>
-      <Link style={padding} to="/create">create new</Link>
-      <Link style={padding} to="/about">about</Link>
-    </div>
-  )
-}
-
 const Anecdote = ({ anecdote, vote }) => {
   return (
     <div>
       <div>{anecdote.content}</div>
       <div>{anecdote.author}</div>
-      <div>has {anecdote.votes} votes
-        <button onClick={() => vote(anecdote.id)}>vote</button>
-      </div>
+      <div>has {anecdote.votes} votes <button onClick={() => vote(anecdote.id)}>vote</button></div>
       <div>{anecdote.info}</div>
     </div>
   )
@@ -36,12 +21,10 @@ const Anecdote = ({ anecdote, vote }) => {
 
 const AnecdoteList = ({ anecdotes }) => (
   <div>
-    <h2>Anecdotes</h2>
+    <h1>Anecdotes</h1>
     <ul>
-      {anecdotes.map(anecdote =>
-        <li key={anecdote.id} >
-          <Link to={`/${anecdote.id}`}>{anecdote.content}</Link>
-        </li>
+      {anecdotes.map(anecdote => <li key={anecdote.id} >
+          <Link to={`/${anecdote.id}`}>{anecdote.content}</Link></li>
       )}
     </ul>
   </div>
@@ -74,10 +57,17 @@ const Footer = () => (
 )
 
 const CreateNew = (props) => {
-  const history = useHistory();
   const [content, resetContent] = useField('text')
   const [author, resetAuthor] = useField('text')
   const [info, resetInfo] = useField('text')
+
+  const history = useHistory();
+
+  const resetInputs = () => {
+    resetContent();
+    resetAuthor();
+    resetInfo();
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -88,12 +78,6 @@ const CreateNew = (props) => {
       votes: 0
     })
     history.push('/')
-  }
-
-  const handleReset = () => {
-    resetContent();
-    resetAuthor();
-    resetInfo();
   }
 
   return (
@@ -113,7 +97,7 @@ const CreateNew = (props) => {
           <input {...info}/>
         </div>
         <button type='submit'>create</button>
-        <button type='button' onClick={handleReset}>reset</button>
+        <button type='button' onClick={resetInputs}>reset</button>
       </form>
     </div>
   )
@@ -168,10 +152,24 @@ const App = () => {
     ? anecdotes.find(anecdote => anecdote.id === match.params.id)
     : null
 
+  const Nav = () => {
+    const padding = {
+      paddingRight: 5
+    }
+
+    return (
+      <div>
+        <Link style={padding} to="/">all anecdotes</Link>
+        <Link style={padding} to="/create">create new</Link>
+        <Link style={padding} to="/about">about</Link>
+      </div>
+    )
+  }
+
   return (
     <div>
-      <h1>Software anecdotes</h1>
-      <Menu/>
+      <h1>Anecdotes</h1>
+      <Nav/>
       {notification}
       <Switch>
         <Route path='/about'>
@@ -181,7 +179,10 @@ const App = () => {
           <CreateNew addNew={addNew}/>
         </Route>
         <Route path='/:id'>
-          <Anecdote anecdote={anecdote} vote={vote}/>
+          <Anecdote
+            anecdote={anecdote}
+            vote={vote}
+          />
         </Route>
         <Route path='/'>
           <AnecdoteList anecdotes={anecdotes}/>
